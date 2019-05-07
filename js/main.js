@@ -58,8 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
         _cart_.innerHTML += info;
         break;
 
+        // this beeing rendered on the info.htnl page 
         case "Info":
-            _intro_.innerHTML = `${data[0].name} / ${data[0].tagline}`;
+            _intro_.innerHTML = `<span class="lead">${data[0].name}</span> / ${data[0].tagline}`;
             _intro_.innerHTML += `${data[0].description}`
             _intro_.innerHTML += `${data[0].brewers_tips}`;
 
