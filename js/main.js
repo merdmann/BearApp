@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     _food_.innerHTML += `<span class="lead">${idx}</span> ${pairing}`
                 } )
             _food_.innerHTML = `${data[0].food_pairing}`
-            _hist_.innerHTML = `${data[0].first_brewed}`
-            _phys_.innerHTML += `EBC: ${data[0].ebc} ,IBU: ${data[0].ibu}, PH: ${data[0].ph}`
+            _hist_.innerHTML = `First brewed: ${data[0].first_brewed}`
+            _phys_.innerHTML += `<span class="lead">EBC:</span> ${data[0].ebc} ,<span class="lead">IBU:</span> ${data[0].ibu}, <span class="lead">PH:</span> ${data[0].ph}`
         
             break;
         }
