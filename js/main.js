@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log("DOMContentLoaded")
     const _cart_ = document.getElementById("cart")
+    let alreadyShown = [];   //this is a list of the shown beers
 
     function main() {
         const title=document.title;
@@ -21,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             /* pick  random beer */
             case "The Bear":
-                console.log("loading randomly");
+                let success = 0;
+
                 for( i=0; i<10; ++i) {
                     fetchData( "https://api.punkapi.com/v2/beers/random" );
                 }
@@ -43,34 +45,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let img_url =  data[0].image_url == null ? "./img/bottle_brewdog-hocus-pocus.png" :  data[0].image_url ;
 
+
         switch( title ) {
             case "The Bear":
-        let info=`
-        <div id="beer-${data[0].id}" class="card a-bottle">
-            <img class="card-img-top" src=${img_url} alt="${data[0].name}">
-            <div class="card-body lead">
-                <h4 class="card-title">${data[0].name}</h4>
-                <p class="card-text">${data[0].tagline}</p>
-                <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
-            </div>
-        </div>
-        `
-        _cart_.innerHTML += info;
-        break;
+            /* only if it has not been shown yet we show it */
+            if(!alreadyShown.includes( data[0].id) ) {
+                alreadyShown.push( data[0].id );
 
-        // this beeing rendered on the info.htnl page 
+                let info=`
+                <div id="beer-${data[0].id}" class="card a-bottle">
+                    <img class="card-img-top bottle-s" src=${img_url} alt="${data[0].name}">
+                    <div class="card-body lead">
+                        <h4 class="card-title">${data[0].name}</h4>
+                        <p class="card-text">${data[0].tagline}</p>
+                        <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
+                    </div>
+                </div>`
+
+                _cart_.innerHTML += info;
+            }
+            break;
+
+        // this is beeing rendered on the info.htnl page 
         case "Info":
-            _intro_.innerHTML = `<span class="lead">${data[0].name}</span> / ${data[0].tagline}`;
-            _intro_.innerHTML += `${data[0].description}`
-            _intro_.innerHTML += `${data[0].brewers_tips}`;
+            _intro_.innerHTML = `<span class="text-s">${data[0].name} / ${data[0].tagline}</span>`;
+            _intro_.innerHTML += `<span class="text-s">${data[0].description}</span>`
+            _intro_.innerHTML += `<span class="text-s">${data[0].brewers_tips}</span>`;
 
                 data[0].food_pairing.forEach( function(pairing,idx ) {
-                    _food_.innerHTML += `<span class="lead">${idx}</span> ${pairing}`
+                    _food_.innerHTML += `<span class="text-s">${idx}</span> ${pairing}`
                 } )
-            _food_.innerHTML = `${data[0].food_pairing}`
-            _hist_.innerHTML = `First brewed: ${data[0].first_brewed}`
-            _phys_.innerHTML += `<span class="lead">EBC:</span> ${data[0].ebc} ,<span class="lead">IBU:</span> ${data[0].ibu}, <span class="lead">PH:</span> ${data[0].ph}`
-        
+            _food_.innerHTML = `<span class="text-s">${data[0].food_pairing}</span>`
+            _hist_.innerHTML = `<span class="text-s">First brewed:${data[0].first_brewed}</span>`
+            _phys_.innerHTML += `<span class="text-s"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
             break;
         }
     }   
