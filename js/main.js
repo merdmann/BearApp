@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("ProcessAndRender");
         console.log(data);
 
-        let img_url =  data[0].image_url == null ? "./img/bottle_brewdog-hocus-pocus.png" :  data[0].image_url ;
+        let img_url =  data[0].image_url == null ? "./img/Beer/iStock.jpg" :  data[0].image_url ;
 
 
         switch( title ) {
