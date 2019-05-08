@@ -4,12 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const _cart_ = document.getElementById("cart")
     let alreadyShown = [];   //this is a list of the shown beers
 
+    /* initiate the transacions */
     function main() {
         const title=document.title;
         let i = 0;
 
         console.log( title )
-        
+
         switch( title ) {
             case "Info":
                 console.log("found " + title);
@@ -22,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             /* pick  random beer */
             case "The Bear":
-                let success = 0;
-
                 for( i=0; i<10; ++i) {
                     fetchData( "https://api.punkapi.com/v2/beers/random" );
                 }
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     } /* main */
 
-
+    /* proess and render the incomming data */
     function ProcessAndRender(data) {
         const title=document.title;
         const _intro_ = document.getElementById("intro");
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let info=`
                 <div id="beer-${data[0].id}" class="card a-bottle">
-                    <img class="card-img-top bottle-s" align="middle" src=${img_url} alt="${data[0].name}">
+                    <img class="card-img-top bottle-s" src=${img_url} alt="${data[0].name}">
                     <div class="card-body lead s-card-body">
                         <h4 class="card-title">${data[0].name}</h4>
                         <p class="card-text">${data[0].tagline}</p>
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             break;
 
-        // this is beeing rendered on the info.htnl page 
+        // this is beeing rendered on the info.htnl page
         case "Info":
             _intro_.innerHTML = `<span class="text-s">${data[0].name} / ${data[0].tagline}</span>`;
             _intro_.innerHTML += `<span class="text-s">${data[0].description}</span>`
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             _phys_.innerHTML += `<span class="text-s"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
             break;
         }
-    }   
+    }
 
 
     // fetches data from the  server
