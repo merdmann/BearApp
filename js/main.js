@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("ProcessAndRender");
         console.log(data);
 
-        let img_url =  data[0].image_url == null ? "./img/Beer/iStock.jpg" :  data[0].image_url ;
-
+        let img_url =  data[0].image_url == null ? "./img/Beer-iStock.jpg" :  data[0].image_url ;
 
         switch( title ) {
             case "The Bear":
@@ -54,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let info=`
                 <div id="beer-${data[0].id}" class="card a-bottle">
-                    <img class="card-img-top bottle-s" src=${img_url} alt="${data[0].name}">
-                    <div class="card-body lead">
+                    <img class="card-img-top bottle-s" align="middle" src=${img_url} alt="${data[0].name}">
+                    <div class="card-body lead s-card-body">
                         <h4 class="card-title">${data[0].name}</h4>
                         <p class="card-text">${data[0].tagline}</p>
                         <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
