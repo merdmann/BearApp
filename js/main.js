@@ -42,17 +42,18 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("ProcessAndRender");
         console.log(data);
 
+        // assign a default image if nothing comes from the server
         let img_url =  data[0].image_url == null ? "./img/Beer-iStock.jpg" :  data[0].image_url ;
 
         switch( title ) {
             case "The Bear":
-            /* only if it has not been shown yet we show it */
+            /* only if it has not been shown yet we show it now */
             if(!alreadyShown.includes( data[0].id) ) {
                 alreadyShown.push( data[0].id );
 
                 let info=`
-                <div id="beer-${data[0].id}" class="card a-bottle">
-                    <img class="card-img-top bottle-s" src=${img_url} alt="${data[0].name}">
+                <div id="beer-${data[0].id}" class="card a-bottle" style="width: 18em;">
+                    <img class="card-img-top bottle-s src=${img_url} alt="${data[0].name}">
                     <div class="card-body lead s-card-body">
                         <h4 class="card-title">${data[0].name}</h4>
                         <p class="card-text">${data[0].tagline}</p>
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             break;
 
-        // this is beeing rendered on the info.htnl page
+        // this is beeing rendered on the info.html page only
         case "Info":
             _intro_.innerHTML = `<span class="text-s">${data[0].name} / ${data[0].tagline}</span>`;
             _intro_.innerHTML += `<span class="text-s">${data[0].description}</span>`
