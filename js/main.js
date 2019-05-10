@@ -3,12 +3,17 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("DOMContentLoaded")
     const _cart_ = document.getElementById("cart")
     let alreadyShown = [];   //this is a list of the shown beers
-
+  
     /* initiate the transacions */
     function main() {
         const title=document.title;
         let i = 0;
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
 
+        if( window.innerWidth > window.innerHeight )
+            alert( "Landscape view are not supported yet");
+            
         console.log( title )
 
         switch( title ) {
@@ -53,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let info=`
                 <div id="beer-${data[0].id}" class="card a-bottle" style="width: 18em;">
-                    <img class="card-img-top bottle-s src=${img_url} alt="${data[0].name}">
+                    <img class="card-img-top bottle-s"  src=${img_url} alt="${data[0].name}">
                     <div class="card-body lead s-card-body">
                         <h4 class="card-title">${data[0].name}</h4>
                         <p class="card-text">${data[0].tagline}</p>

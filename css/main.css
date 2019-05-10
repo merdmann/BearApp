@@ -15,6 +15,8 @@
 
 .bottle-s {
     height: 60%;
+    margin: 10px;
+    display: flex;
 }
 
 .text-s {
@@ -26,65 +28,80 @@
     color: white;
 }
 
-/* galaxy 5
-/* iPhone 5/SE */
-@media (max-width: 320px) and ( max-height: 640px ) {
-    .bottle-s {
-        display: none;
-        width:  20%;
-        height: 20%;
-    }
-    .a-bottle {
-        margin-left: 30px;
-        margin-right: 30px;
-        margin-bottom: 50px;
-    }
-    .my-flex {
-        display: flex;
-        flex-direction: row;
-    }
-}
+/* Breakpoint 1 (iPhone 5S): 320px
+ * Breakpoint 2 (iPhone 6+): 414px
+ * Breakpoint 3 (iPad Mini): 703px
+ * Breakpoint 4 (iPad Air): 768px
 
-/* iPhone 6/7 */
-@media (max-width: 414px) and ( max-height: 736px ) {
-    .text-s {
-        font-size: 100%;
-        color: blue;
-        margin: 0.1rem;
+ /* iPhone 5/SE  */
+@media ( max-height: 568 px ) {
+    div {
+        background-color: lightblue; 
+    }
+    .lead {
+        margin-bottom: -30px
+    }
+    .s-card-body {
+        width: 40%;
     }
     .my-flex {
-        display: flex;
         flex-direction: column;
-        color: red;
+    }
+    .bottle-s {
+        display: flex ;
+    }
+}
+/* galaxy S5 */
+@media  ( max-height: 640px ) {
+    div {
+        /* background-color: red;*/
+        font-size:  150%;
+    }
+
+    .s-card-body {
+        width: 40%
+    }
+
+    .my-flex {
+        flex-direction: column
+    }
+
 }
 
-@media (min-width: 768px) and ( max-height: 1366px ) {
-        .text-s {
-            font-size: 250%;
-        }
-        .my-flex {
-            display: flex;
-            flex-direction: column;
-        }
+/* iPhone 6/7/8 and iPhone X*/
+@media (min-height: 667px ) {
+    div {
+     /*  background-color: green; */
+        font-size: 160%;
+    }
+    .my-flex {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
 }
-/*   iPad, iPad Pro */
-@media (min-width: 1024px) and ( max-height: 1366px ) {
-    .text-s {
-        font-size: 150%;
+/* iPhone 6/7/8 and iPhone X*/
+@media (max-height: 736px ) {
+    div {
+        /* background-color: lightgreen; */
+        font-size: 160%
+    }
+    .my-flex {
+        flex-direction: column;
+        flex-wrap: nowrap;
     }
 }
 
-/* iPad */
-@media (min-width: 768px) and ( max-height: 1366px ) {
-    .text-s {
+/* IPad IPad Pro*/
+/* iPhone 6/7/8 and iPhoneX*/
+@media ( min-height: 1366px ) {
+    div {
+        /* color: yellow; */
         font-size: 260%;
     }
-}
-
-/* iPad landscape */
-@media (min-width: 1366px ) and ( max-height: 768px ) {
-    .text-s {
-        font-size: 160%;
-        color: blue;
+    .my-flex {
+        flex-direction: row ;
+        flex-wrap: nowrap;
     }
 }
+
+
