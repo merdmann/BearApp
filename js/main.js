@@ -38,12 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
     /* proess and render the incomming data */
     function ProcessAndRender(data) {
         const title=document.title;
-        const _intro_ = document.getElementById("intro");
-        const _food_ = document.getElementById("food");
-        const _phys_ = document.getElementById("phys");
-        const _hist_ = document.getElementById("history");
-        const _ref_ = document.getElementById("references");
-
         console.log("ProcessAndRender");
         console.log(data);
 
@@ -52,39 +46,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
         switch( title ) {
             case "The Bear":
-            /* only if it has not been shown yet we show it now */
-            if(!alreadyShown.includes( data[0].id) ) {
-                alreadyShown.push( data[0].id );
+                /* only if it has not been shown yet we show it now */
+                if(!alreadyShown.includes( data[0].id) ) {
+                    alreadyShown.push( data[0].id );
 
-                let info=`
-                <div id="beer-${data[0].id}" class="card a-bottle" style="width: 18em;">
-                    <img class="card-img-top bottle-s"  src=${img_url} alt="${data[0].name}">
-                    <div class="card-body lead s-card-body">
-                        <h4 class="card-title">${data[0].name}</h4>
-                        <p class="card-text">${data[0].tagline}</p>
-                        <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
-                    </div>
-                </div>`
+                    let info=`
+                    <div id="beer-${data[0].id}" class="card a-bottle" style="width: 18em;">
+                        <img class="card-img-top bottle-s "  src=${img_url} alt="${data[0].name}"> 
+                        <div class="card-body lead s-card-body">
+                            <h4 class="card-title">${data[0].name}</h4>
+                            <p class="card-text">${data[0].tagline}</p>
+                            <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
+                        </div>
+                    </div>`
 
                 _cart_.innerHTML += info;
-            }
+                } /* end if includes */  
             break;
-
+         
         // this is beeing rendered on the info.html page only
-        case "Info":
+        case "Info": 
+            const _intro_ = document.getElementById("intro");
+            const _food_ = document.getElementById("food");
+            const _phys_ = document.getElementById("phys");
+            const _hist_ = document.getElementById("history");
+            const _ref_ = document.getElementById("references");
+
             _intro_.innerHTML = `<span class="text-s">${data[0].name} / ${data[0].tagline}</span>`;
             _intro_.innerHTML += `<span class="text-s">${data[0].description}</span>`
             _intro_.innerHTML += `<span class="text-s">${data[0].brewers_tips}</span>`;
 
                 data[0].food_pairing.forEach( function(pairing,idx ) {
                     _food_.innerHTML += `<span class="text-s">${idx}</span> ${pairing}`
-                } )
+                })
             _food_.innerHTML = `<span class="text-s">${data[0].food_pairing}</span>`
             _hist_.innerHTML = `<span class="text-s">First brewed:${data[0].first_brewed}</span>`
             _phys_.innerHTML += `<span class="text-s"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
             break;
         }
-    }
+    } 
 
 
     // fetches data from the  server
@@ -103,4 +103,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     main();
-}) // DOMContentLoaded handler
+} ) // DOMContentLoaded handler
