@@ -105,4 +105,9 @@
     }
 }
 
+/* to display the info page */
+.info {
+    display: none;
+}
 
+/* to display the beer part */

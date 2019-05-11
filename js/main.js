@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("DOMContentLoaded")
     const _cart_ = document.getElementById("cart")
     let alreadyShown = [];   //this is a list of the shown beers
-  
+
     /* initiate the transacions */
     function main() {
         const title=document.title;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if( window.innerWidth > window.innerHeight )
             alert( "Landscape view are not supported yet");
-            
+
         console.log( title )
 
         switch( title ) {
@@ -31,9 +31,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 for( i=0; i<10; ++i) {
                     fetchData( "https://api.punkapi.com/v2/beers/random" );
                 }
-                break;
+
+                var cards = document.querySelectorAll(".card")
+                console.log(cards.length);
+                cards.forEach( function(card) { console.log(card)} );
         }
     } /* main */
+
+    /* turn display class on */
+    function show(name) {
+        const cls = document.querySelector(name);
+        cls.forEach( function( elem ) { elem.style.display = "auto"; })
+    }
+
+       /* turn display class on */
+       function hide(name) {
+        const cls = document.querySelector(name);
+        cls.forEach( function( elem ) { elem.style.display = "auto"; })
+    }
 
     /* proess and render the incomming data */
     function ProcessAndRender(data) {
@@ -44,47 +59,53 @@ document.addEventListener('DOMContentLoaded', function () {
         // assign a default image if nothing comes from the server
         let img_url =  data[0].image_url == null ? "./img/Beer-iStock.jpg" :  data[0].image_url ;
 
+        let cards = document.querySelectorAll(".btn-primary");
+        cards.forEach( function(card){ 
+           console.log(card);
+           card.addEventListener('click', function() {console.log("click .... " + this.id)}) 
+        })
+
         switch( title ) {
             case "The Bear":
                 /* only if it has not been shown yet we show it now */
                 if(!alreadyShown.includes( data[0].id) ) {
-                    alreadyShown.push( data[0].id );
+                    alreadyShown.push( data[0].id );  // item will be shown
 
                     let info=`
-                    <div id="beer-${data[0].id}" class="card a-bottle" style="width: 18em;">
-                        <img class="card-img-top bottle-s "  src=${img_url} alt="${data[0].name}"> 
-                        <div class="card-body lead s-card-body">
-                            <h4 class="card-title">${data[0].name}</h4>
-                            <p class="card-text">${data[0].tagline}</p>
-                            <a href="./info.html?id=${data[0].id}" class="card-link">more info</a>
+                    <div id="beer-${data[0].id}" class="card a-bottle beer">
+                        <img class="card-img-top bottle-s beer "  src=${img_url} alt="${data[0].name}">
+                        <div class="card-body lead s-card-body beer">
+                            <h4 class="card-title beer">${data[0].name}</h4>
+                            <p class="card-text beer">${data[0].tagline}</p>
+                            <button id="${data[0].id}" type="button" class="btn btn-primary">Primary</button>
                         </div>
                     </div>`
-
+                    
                 _cart_.innerHTML += info;
-                } /* end if includes */  
+                } /* end if if includes */
             break;
-         
         // this is beeing rendered on the info.html page only
-        case "Info": 
+        case "Info":
+            show("info");
             const _intro_ = document.getElementById("intro");
             const _food_ = document.getElementById("food");
             const _phys_ = document.getElementById("phys");
             const _hist_ = document.getElementById("history");
             const _ref_ = document.getElementById("references");
 
-            _intro_.innerHTML = `<span class="text-s">${data[0].name} / ${data[0].tagline}</span>`;
-            _intro_.innerHTML += `<span class="text-s">${data[0].description}</span>`
-            _intro_.innerHTML += `<span class="text-s">${data[0].brewers_tips}</span>`;
+            _intro_.innerHTML = `<span class="text-s  info">${data[0].name} / ${data[0].tagline}</span>`;
+            _intro_.innerHTML += `<span class="text-s info">${data[0].description}</span>`
+            _intro_.innerHTML += `<span class="text-s" info>${data[0].brewers_tips}</span>`;
 
                 data[0].food_pairing.forEach( function(pairing,idx ) {
                     _food_.innerHTML += `<span class="text-s">${idx}</span> ${pairing}`
                 })
-            _food_.innerHTML = `<span class="text-s">${data[0].food_pairing}</span>`
-            _hist_.innerHTML = `<span class="text-s">First brewed:${data[0].first_brewed}</span>`
-            _phys_.innerHTML += `<span class="text-s"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
+            _food_.innerHTML = `<span class="text-s info">${data[0].food_pairing}</span>`
+            _hist_.innerHTML = `<span class="text-s info">First brewed:${data[0].first_brewed}</span>`
+            _phys_.innerHTML += `<span class="text-s info"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
             break;
         }
-    } 
+    }
 
 
     // fetches data from the  server
@@ -97,10 +118,14 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(function (myJson) {
                 ProcessAndRender(myJson);
-                console.log(myJson)
             })
             .catch(err => console.log(err))
     }
 
     main();
 } ) // DOMContentLoaded handler
+
+function readmore(id) {
+    console.log("readmore" + id )
+    fetchData( "https://api.punkapi.com/v2/beers/"+id );
+}
