@@ -29,6 +29,19 @@
     color: white;
 }
 
+/* the complete article section */
+.homepage {
+    display: auto;
+}
+
+.info {
+    display: auto;
+}
+
+.beer {
+    width: 40%%;
+}
+
 /* Breakpoint 1 (iPhone 5S): 320px
  * Breakpoint 2 (iPhone 6+): 414px
  * Breakpoint 3 (iPad Mini): 703px
