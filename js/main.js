@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const _cart_ = document.getElementById("cart")
     let alreadyShown = [];   //this is a list of the shown beers
+    let currentBeer = 0;
 
 /* turn display for all elements with the given name */
 function show(name) {
@@ -61,12 +62,6 @@ function ProcessAndRender(data) {
         // assign a default image if nothing comes from the server
         let img_url =  data[0].image_url == null ? "./img/Beer-iStock.jpg" :  data[0].image_url ;
 
-        let cards = document.querySelectorAll(".card-img-top");
-        cards.forEach( function(card){
-          // console.log(card);
-           card.addEventListener('click', function() {console.log("click ....id=" + this.id)})
-        })
-
         // https://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements
 
         switch( title ) {
@@ -77,6 +72,7 @@ function ProcessAndRender(data) {
                     alreadyShown.push( data[0].id );  // item will be shown
 
                     let info=`
+                    <a name="beer-${data[0].id}">
                     <div id="beer-${data[0].id}" class="card a-bottle text-center">
                         <img class="card-img-top bottle-s beer" src=${img_url} alt="${data[0].name}">
                         <div class="card-body lead s-card-body">
@@ -93,11 +89,12 @@ function ProcessAndRender(data) {
         case "Info":
             hide(".homepage")
             show(".info");
-            const _intro_ = document.getElementById("intro");
-            const _food_ = document.getElementById("food");
-            const _phys_ = document.getElementById("phys");
-            const _hist_ = document.getElementById("history");
-            const _ref_ = document.getElementById("references");
+            const _intro_  = document.getElementById("intro");
+            const _food_   = document.getElementById("food");
+            const _phys_   = document.getElementById("phys");
+            const _hist_   = document.getElementById("history");
+            const _ref_    = document.getElementById("references");
+            const _return_ = document.getElementById("return");
 
             _intro_.innerHTML += `<p class="text-s info">${data[0].name} / ${data[0].tagline}</p>`;
             _intro_.innerHTML += `<p class="text-s info">${data[0].description}</p>`
@@ -109,24 +106,25 @@ function ProcessAndRender(data) {
             _food_.innerHTML += `${data[0].food_pairing}`
             _hist_.innerHTML += `<p>First brewed:${data[0].first_brewed}</p>`
             _phys_.innerHTML += `<p>EBC: ${data[0].ebc},IBU:${data[0].ibu},PH: ${data[0].ph}</p>`;
-            
+            _return_.innerHTML = `<a href="#beer-${currentBeer}" onclick="goback(${currentBeer})" class="btn btn-info" role="button">Return</a>`;
+
             break;
         }
 }
 
+function  goback(id) {
+    show(".homepage");
+    console.log(id);   
+}
 
 function readmore(id) {
+    currentBeer = id;
     hide(".homepage")
-    console.log("readmore beer" + id )
     document.title="Info"
     DecideToStart("Info", id);
-}
+} /* readmore */
 
 
-function gotoBeer( id ) {
-    
-}
- 
    /* fetch data is fetching the data of  given url */
 function fetchData(url) {
     console.log(url);
