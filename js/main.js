@@ -1,17 +1,13 @@
 'use strict'
 document.addEventListener('DOMContentLoaded', function () {
     console.log("DOMContentLoaded")
-    main("The Bear");
 
     /* called if the html dpocument has beem rendred */
     function main(title, id) {
-        //const title=document.title;
-        let i = 0;
-
         DecideToStart( title, id);
     } /* main */
 
-    main("The Beer")
+    main("The Beer", 10)
 }) // everything in his block has been called after the html file has been rendered.
 
     const _cart_ = document.getElementById("cart")
@@ -39,8 +35,7 @@ function hide(name) {
  * Decide what needs to be done first
  */
 function DecideToStart(where, beer) {
-        console.log("DecideToSTart: " + "where:" + where + " beer: " + beer)
-        let i = 0;
+        console.log(where)
 
         switch( where ) {
             case "Info":
@@ -48,9 +43,10 @@ function DecideToStart(where, beer) {
                 fetchData( "https://api.punkapi.com/v2/beers/"+beer );
                 break;
 
-            /* pick  random beer */
-            case "The Bear":
-                for( i=0; i<10; ++i) {
+            /* pick 10 random beer */
+            case "The Beer":
+                for(var i=0; i<beer; ++i) {
+                    console.log(where + i);
                     fetchData( "https://api.punkapi.com/v2/beers/random" );
                 }
         }
@@ -81,11 +77,11 @@ function ProcessAndRender(data) {
                     alreadyShown.push( data[0].id );  // item will be shown
 
                     let info=`
-                    <div id="beer-${data[0].id}" class="card a-bottle beer">
-                        <img class="card-img-top bottle-s beer " src=${img_url} alt="${data[0].name}">
-                        <div class="card-body lead s-card-body beer">
-                            <h4 class="card-title beer">${data[0].name}</h4>
-                            <p class="card-text beer">${data[0].tagline}</p>
+                    <div id="beer-${data[0].id}" class="card a-bottle text-center">
+                        <img class="card-img-top bottle-s beer" src=${img_url} alt="${data[0].name}">
+                        <div class="card-body lead s-card-body">
+                            <h4 class="card-title">${data[0].name}</h4>
+                            <p class="card-text">${data[0].tagline}</p>
                             <button onclick="readmore(${data[0].id})" type="button" class="btn btn-primary">Read more</button>
                         </div>
                     </div>`
@@ -103,16 +99,17 @@ function ProcessAndRender(data) {
             const _hist_ = document.getElementById("history");
             const _ref_ = document.getElementById("references");
 
-            _intro_.innerHTML = `<span class="text-s  info">${data[0].name} / ${data[0].tagline}</span>`;
-            _intro_.innerHTML += `<span class="text-s info">${data[0].description}</span>`
-            _intro_.innerHTML += `<span class="text-s" info>${data[0].brewers_tips}</span>`;
+            _intro_.innerHTML += `<p class="text-s info">${data[0].name} / ${data[0].tagline}</p>`;
+            _intro_.innerHTML += `<p class="text-s info">${data[0].description}</p>`
+            _intro_.innerHTML += `<p class="text-s" info>${data[0].brewers_tips}</p>`;
 
-                data[0].food_pairing.forEach( function(pairing,idx ) {
-                    _food_.innerHTML += `<span class="text-s">${idx}</span> ${pairing}`
+                data[0].food_pairing.forEach( function(pairing, idx ) {
+                    _food_.innerHTML += `<p class="text-s">${pairing}</p>`;
                 })
-            _food_.innerHTML = `<span class="text-s info">${data[0].food_pairing}</span>`
-            _hist_.innerHTML = `<span class="text-s info">First brewed:${data[0].first_brewed}</span>`
-            _phys_.innerHTML += `<span class="text-s info"<strong>EBC:</strong> ${data[0].ebc} ,<strong>IBU:</strong> ${data[0].ibu}, <strong>PH:</strong> ${data[0].ph}`;
+            _food_.innerHTML += `${data[0].food_pairing}`
+            _hist_.innerHTML += `<p>First brewed:${data[0].first_brewed}</p>`
+            _phys_.innerHTML += `<p>EBC: ${data[0].ebc},IBU:${data[0].ibu},PH: ${data[0].ph}</p>`;
+            
             break;
         }
 }
@@ -125,6 +122,11 @@ function readmore(id) {
     DecideToStart("Info", id);
 }
 
+
+function gotoBeer( id ) {
+    
+}
+ 
    /* fetch data is fetching the data of  given url */
 function fetchData(url) {
     console.log(url);
